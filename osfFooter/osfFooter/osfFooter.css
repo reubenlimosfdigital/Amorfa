@@ -1,0 +1,143 @@
+/* FOOTER STYLING & FLEXBOX */
+footer {
+    background-color: #2d2d2d;
+    color:#fffafa;
+    padding: 45px 0 25px 0;
+    font-size: 1rem;
+}
+
+.footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+footer h4 {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color:#fffafa;
+}
+
+footer p {
+    padding: 0 20px 10px 0;
+}
+
+/* FLEXBOX */
+.footer-row {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+@media only screen and (max-width:767px) {
+    .footer-row {
+        flex-direction: column;
+    }
+
+    .footer-col {
+        margin: 20px 0;
+    }
+
+    .footer-logo {
+        display: block !important;
+    }
+
+    .footer-copyright {
+        font-size: 0.8em !important;
+    }
+
+    .copyright-col {
+        flex: 1;
+        align-items: flex-end;
+        justify-content: start !important;
+        display: flex;
+        text-align: left;
+    }
+}
+
+.footer-col {
+    flex: 1;
+}
+
+/* LINK LIST */
+
+ul.link-list {
+    margin: 0;
+    list-style: none;
+}
+
+/* STYLING */
+a {
+    color: #fffafa;
+    touch-action: manipulation;
+    outline: 0;
+    transition: all .25s ease-in-out;
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    transition-duration: .1s;
+    -moz-transition-duration: .1s;
+    -webkit-transition-duration: .1s;
+    -o-transition-duration: .1s;
+    color: #d0d0d0;
+    outline: 0;
+}
+
+.footer-logo {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.footer-logo img {
+    width: 130px;
+    margin: 0 auto;
+}
+
+img.social-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.footer-copyright {
+    margin-top: 50px;
+    color: #fffafa;
+    font-size: 0.65em;
+}
+
+.copyright-col {
+    flex: 0 0 25%;
+    align-items: flex-end;
+    justify-content: center;
+    display: flex;
+}
+
+/* SUBSCRIBE */
+.subscribe {
+    color: #fffafa;
+}
+
+.subscribe p {
+    margin-bottom: 10px;
+}
+
+.subscribe input {
+    height: 35px;
+    margin-right: 5px;
+    padding: 5px;
+    border: 1px solid #fffafa;
+    border-radius: 0;
+    box-sizing: border-box;
+    color: #2d2d2d;
+}
+
+.subscribe button {
+    height: 35px;
+    padding: 4px 15px 3px 15px;
+    background-color: #2d2d2d;
+    color: #fffafa;
+    border: 1px solid #fffafa;
+    box-sizing: border-box;
+}
