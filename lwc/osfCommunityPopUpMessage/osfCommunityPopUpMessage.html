@@ -1,0 +1,49 @@
+<template>
+    
+    <!-- modal start -->      
+    <template if:true={isShowModal}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+
+    <!-- modal header start -->
+      <header class="slds-modal__header" style="border-bottom-width: 0px;">
+         <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalBox}>
+            <lightning-icon icon-name="utility:close"
+               alternative-text="close"
+               variant="inverse"
+               size="small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+         </button>
+         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{currentMessage.OSF_Message_Title__c}</h2>
+      </header>
+    
+      <!-- modal body start -->
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <div>
+            <template if:true={showImage}>
+            <div style="width: 40%; float:left; display:inline-block">
+                <img src={currentMessage.OSF_Image_URL__c} style="margin-right:10px;" />
+    
+            </div>
+            <div style="width: 60%; float:left; display:inline-block;padding: 10px;">{currentMessage.OSF_Message_Body__c}</div>
+            </template>
+    
+            <template if:false={showImage}>
+                <div style="text-align:center;padding: 10px;">{currentMessage.OSF_Message_Body__c}</div>
+            </template>
+            
+        </div>
+      </div>
+    
+      <!-- modal footer start-->
+      <footer class="slds-modal__footer" style="border-top-width: 0px;text-align: center;">
+        <!-- <lightning-input type="checkbox" label="Don't show this message again" name="input1" onchange={hideModalBox}></lightning-input>-->
+      </footer>
+    
+    </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- modal end -->
+    
+    </template>
