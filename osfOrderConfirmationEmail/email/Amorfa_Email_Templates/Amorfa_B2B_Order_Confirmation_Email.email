@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject=" Order Confirmation" recipientType="Contact" relatedToType="OrderSummary" renderUsingSystemContextWithoutSharing="true">
+    <messaging:htmlEmailBody >
+        <c:OSF_B2BOrderConfirmationTemplate ordSummaryId="{!RelatedTo.Id}"></c:OSF_B2BOrderConfirmationTemplate>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>
