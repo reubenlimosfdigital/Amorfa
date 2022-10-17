@@ -1,3 +1,11 @@
+/*------------------------------------------------------------
+Author:        Reuben Lim
+Company:       OSF Digital ANZ
+Description:   Test Class for OSF_StripeAdapter
+Test Class:    N/A
+<Date>         <Authors Name>     <Brief Description of Change>
+17-Oct-2022    Reuben Lim         Implemented test class for OSF_StripeAdapter
+------------------------------------------------------------*/
 @isTest
 private class OSF_StripeAdapterTest {
 

@@ -1,3 +1,11 @@
+/*------------------------------------------------------------
+Author:        Reuben Lim
+Company:       OSF Digital ANZ
+Description:   Provides a mock response for the Stripe Adapter Test Class
+Test Class:    N/A
+<Date>         <Authors Name>     <Brief Description of Change>
+14-Oct-2022    Reuben Lim         Implemented mock response.
+------------------------------------------------------------*/
 @istest
 global class OSF_StripeAdapterMock implements HttpCalloutMock{
     global HTTPResponse respond(HTTPRequest req) {
