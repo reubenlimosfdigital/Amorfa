@@ -8,7 +8,7 @@ As of writing on 17 October 2022, this only works for B2B2C.
 POST DEPLOYMENT STEPS
 ---------------------
 
-After deploying the classes, you must perform the following steps:
+After deploying the classes, you must perform the following steps (taken from SF directly):
 
 CREATE A NAMED CREDENTIAL
 1. Navigate to Setup > Security > Named Credentials
