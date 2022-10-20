@@ -15,7 +15,7 @@ private class OSF_StripeAdapterTest {
         integer responseCode = 200;
 
         Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new OSF_StripeAdapterMock(responseCode));
+        Test.setMock(HttpCalloutMock.class, new OSF_StripeHttpMock(responseCode));
         generateTokenizeResponse(responseCode);
         Test.stopTest();
     }
@@ -25,7 +25,7 @@ private class OSF_StripeAdapterTest {
         integer responseCode = 400;
 
         Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new OSF_StripeAdapterMock(responseCode));
+        Test.setMock(HttpCalloutMock.class, new OSF_StripeHttpMock(responseCode));
         generateTokenizeResponse(responseCode);
         Test.stopTest();
     }
@@ -36,7 +36,7 @@ private class OSF_StripeAdapterTest {
         insert new CardPaymentMethod(GatewayToken='pm_1234', status='Active', processingMode='External');
 
         Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new OSF_StripeAdapterMock(responseCode));
+        Test.setMock(HttpCalloutMock.class, new OSF_StripeHttpMock(responseCode));
         generateAuthResponse(responseCode);
         Test.stopTest();
     }
@@ -47,7 +47,7 @@ private class OSF_StripeAdapterTest {
         insert new CardPaymentMethod(GatewayToken='pm_1234', status='Active', processingMode='External');
 
         Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new OSF_StripeAdapterMock(responseCode));
+        Test.setMock(HttpCalloutMock.class, new OSF_StripeHttpMock(responseCode));
         generateAuthResponse(responseCode);
         Test.stopTest();
     }

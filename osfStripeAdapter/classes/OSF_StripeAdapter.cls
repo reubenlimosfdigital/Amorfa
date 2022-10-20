@@ -62,7 +62,7 @@ global class OSF_StripeAdapter implements commercepayments.PaymentGatewayAdapter
         params.put('card[exp_month]', String.valueOf(cardPaymentMethod.expiryMonth));
         params.put('card[exp_year]', String.valueOf(cardPaymentMethod.expiryYear));
         params.put('card[cvc]', cardPaymentMethod.cvv);
-
+        
         // add fraud data
         if (tokenizeRequest.ipAddress != null) {
             params.put('ip', tokenizeRequest.ipAddress);
@@ -150,6 +150,8 @@ global class OSF_StripeAdapter implements commercepayments.PaymentGatewayAdapter
         params.put('confirmation_method', 'manual'); // e.g. 3DS
         params.put('capture_method', 'manual');
         //params.put('receipt_email', UserInfo.getUserEmail()); // for future use, need to identify how to retrieve email
+        //extra stuff
+        params.put('description','Amorfa purchase');
         
         HttpResponse response = doPost('payment_intents', params);
         String body = response.getBody();
@@ -165,6 +167,7 @@ global class OSF_StripeAdapter implements commercepayments.PaymentGatewayAdapter
         authResponse.setGatewayResultCode(String.valueOf(sc) + ' ' + HTTP_STATUS_CODE_VALUES.get(sc)); //64 max
         
         //have seen only 200 success and 400 and 402
+        
         if (sc == 200) {
             authResponse.setGatewayAuthCode(gatewayAuthCode);
             authResponse.setAmount(fromStripeCurrencyUnits((String) intent.get('currency'), (Long) intent.get('amount')));
