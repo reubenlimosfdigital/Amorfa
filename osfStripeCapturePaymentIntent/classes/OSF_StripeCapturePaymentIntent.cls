@@ -8,6 +8,7 @@ Description:   An invocable method to perform a Stripe Capture Payment Intent AP
 Test Class:    OSF_StripeCapturePaymentIntent
 <Date>         <Authors Name>     <Brief Description of Change>
 19-Oct-2022    Reuben Lim         First implemented
+27-Oct-2022    Reuben Lim         Made the named credential callout dynamic based on the Payment Auth record
 ------------------------------------------------------------*/
 
 public class OSF_StripeCapturePaymentIntent {
@@ -35,11 +36,14 @@ public class OSF_StripeCapturePaymentIntent {
     @future(callout=true)
     private static void callStripeCapturePaymentIntentsEndpoint(id paymentAuthId, id paymentGatewayLogId) {
 		//https://stripe.com/docs/api/payment_intents
-        PaymentAuthorization pa = [SELECT id, GatewayAuthCode, OrderPaymentSummaryId, PaymentMethodId, paymentGroupId, CurrencyIsoCode FROM PaymentAuthorization WHERE Id =: paymentAuthId LIMIT 1];
+        PaymentAuthorization pa = [SELECT id, GatewayAuthCode, OrderPaymentSummaryId, PaymentMethodId, paymentGroupId, CurrencyIsoCode, PaymentGatewayId FROM PaymentAuthorization WHERE Id =: paymentAuthId LIMIT 1];
         PaymentGatewayLog pgl = [SELECT id FROM PaymentGatewayLog WHERE id =: paymentGatewayLogId LIMIT 1];
 
+        //grab the named credentials for the callout. this is based on the payment authorization record which has the gateway
+        String namedCredential = [SELECT MerchantCredential.DeveloperName FROM PaymentGateway WHERE id =:pa.PaymentGatewayId LIMIT 1][0].MerchantCredential.DeveloperName;
+
         HttpRequest req = new HttpRequest();
-        req.setEndpoint('callout:StripeAdapter_NC/v1/payment_intents/' +  pa.gatewayAuthCode + '/capture' );
+        req.setEndpoint('callout:' + namedCredential + '/v1/payment_intents/' +  pa.gatewayAuthCode + '/capture' );
         req.setMethod('POST');
         req.setBody('{}');
         
@@ -82,7 +86,7 @@ public class OSF_StripeCapturePaymentIntent {
             payment.gatewayDate = System.now();
             payment.gatewayResultCode = string.valueOf(sc) + ' ' +  HTTP_STATUS_CODE_VALUES.get(sc);
             payment.orderPaymentSummaryId = pa.OrderPaymentSummaryId;
-            payment.OSF_Capture_Receipt_URL__c = (String)data.get('receipt_url');
+            //payment.OSF_Capture_Receipt_URL__c = (String)data.get('receipt_url');
             insert payment;
         } else {
             // log all information on a failed capture
