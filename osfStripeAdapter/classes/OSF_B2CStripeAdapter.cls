@@ -3,11 +3,12 @@ Author:        Reuben Lim
 Company:       OSF Digital ANZ
 Description:   Implements Stripe as a Payment Provider during checkout.
                Based on the SF reference class. Currently tested with B2B2C only.
-Test Class:    OSF_StripeAdapterTest
+Test Class:    OSF_B2CStripeAdapterTest
 <Date>         <Authors Name>     <Brief Description of Change>
 14-Oct-2022    Reuben Lim         Implemented test class since SF doesn't provide one.
 17-Oct-2022    Reuben Lim         Implemented a logic check to support multi-currency.
 18-Oct-2022    Reuben Lim         Removed unused logic. Only Authorize and Tokenize methods are used.
+27-Oct-2022    Reuben Lim         Renamed as this only works for B2B2C cases.
 ------------------------------------------------------------*/
 
 global class OSF_B2CStripeAdapter implements commercepayments.PaymentGatewayAdapter {
