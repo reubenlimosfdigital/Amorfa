@@ -46,7 +46,7 @@ global class OSF_B2CStripeAdapter implements commercepayments.PaymentGatewayAdap
                 response = createAuthResponse((commercepayments.AuthorizationRequest) paymentRequest);
             }
             return response;
-        } catch (StripeValidationException e) {
+        } catch (OSF_StripeValidationException e) {
              return new commercepayments.GatewayErrorResponse('400', e.getMessage());
         }
     }
