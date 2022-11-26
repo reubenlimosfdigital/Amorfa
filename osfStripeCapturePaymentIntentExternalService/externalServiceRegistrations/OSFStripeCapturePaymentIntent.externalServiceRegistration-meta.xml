@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Captures a Payment Intent.</description>
+    <label>OSFStripeCapturePaymentIntent</label>
+    <namedCredential>OSF_Stripe_Test_Account</namedCredential>
+    <operations>
+        <active>true</active>
+        <name>postv1paymentx5fintentscapturebyid</name>
+    </operations>
+    <registrationProviderType>Custom</registrationProviderType>
+    <schema>{
+  &quot;openapi&quot;: &quot;3.0.3&quot;,
+  &quot;info&quot;: {
+    &quot;title&quot;: &quot;Stripe Payment Intent Swagger&quot;,
+    &quot;description&quot;: &quot;The Swagger written for OSF Digital for External Services&quot;,
+    &quot;version&quot;: &quot;1.0.&quot;
+  },
+  &quot;externalDocs&quot;: {
+    &quot;description&quot;: &quot;Find out more about Swagger&quot;,
+    &quot;url&quot;: &quot;http://swagger.io&quot;
+  },
+  &quot;servers&quot;: [{
+    &quot;url&quot;: &quot;https://api.stripe.com/&quot;
+  }],
+  &quot;paths&quot;: {
+    &quot;/v1/payment_intents/{id}/capture&quot;: {
+      &quot;post&quot;: {
+        &quot;parameters&quot;: [{
+          &quot;in&quot;: &quot;path&quot;,
+          &quot;name&quot;: &quot;id&quot;,
+          &quot;schema&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;pi_3M7uQJKgY5eOD51n1h73nyWE&quot;
+          },
+          &quot;required&quot;: true,
+          &quot;description&quot;: &quot;the payment intent id&quot;
+        }],
+        &quot;requestBody&quot;: {
+          &quot;description&quot;: &quot;Captures a payment intent&quot;,
+          &quot;content&quot;: {
+            &quot;application/json&quot;: {
+              &quot;schema&quot;: {
+                &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentRequest&quot;
+              }
+            }
+          },
+          &quot;required&quot;: false
+        },
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;Successful&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentSuccessResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;400&quot;: {
+            &quot;description&quot;: &quot;Error&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/capturePaymentIntentUnexpectedStateResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;401&quot;: {
+            &quot;description&quot;: &quot;Unauthorized&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;402&quot;: {
+            &quot;description&quot;: &quot;Request Failed&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;403&quot;: {
+            &quot;description&quot;: &quot;Forbidden&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;404&quot;: {
+            &quot;description&quot;: &quot;Not Found&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;409&quot;: {
+            &quot;description&quot;: &quot;Conflict&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;429&quot;: {
+            &quot;description&quot;: &quot;Too Many Requests&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          },
+          &quot;500&quot;: {
+            &quot;description&quot;: &quot;Server Error&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentFailureResponse&quot;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  &quot;security&quot;: [{
+    &quot;bearerAuth&quot;: [
+      &quot;sk_test_51LPJmYKgY5eOD51ngCJGesj6iMyDetl1147SLpslAJSh8Darf5LZrmXr2DYx05ZmzUQVOBJV3XnDoq9GzE1ljJuH00g2OsbpyN&quot;
+    ]
+  }],
+  &quot;components&quot;: {
+    &quot;securitySchemes&quot;: {
+      &quot;bearerAuth&quot;: {
+        &quot;type&quot;: &quot;http&quot;,
+        &quot;scheme&quot;: &quot;bearer&quot;
+      }
+    },
+    &quot;schemas&quot;: {
+      &quot;CapturePaymentIntentRequest&quot;: {
+        &quot;type&quot;: &quot;object&quot;
+      },
+      &quot;CapturePaymentIntentSuccessResponse&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;id&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;pi_3M7uQJKgY5eOD51n1h73nyWE&quot;
+          },
+          &quot;object&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;payment_intent&quot;
+          },
+          &quot;amount&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 39990
+          },
+          &quot;amount_capturable&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 0
+          },
+          &quot;amount_details&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;tip&quot;: {
+                &quot;type&quot;: &quot;object&quot;
+              }
+            }
+          },
+          &quot;amount_received&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 39990
+          },
+          &quot;application&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;application_fee_amount&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;automatic_payment_methods&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;canceled_at&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;cancellation_reason&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;capture_method&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;manual&quot;
+          },
+          &quot;charges&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;object&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;list&quot;
+              },
+              &quot;data&quot;: {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;$ref&quot;: &quot;#/components/schemas/charge&quot;
+                }
+              },
+              &quot;has_more&quot;: {
+                &quot;type&quot;: &quot;boolean&quot;,
+                &quot;example&quot;: false
+              },
+              &quot;total_count&quot;: {
+                &quot;type&quot;: &quot;integer&quot;,
+                &quot;format&quot;: &quot;int32&quot;,
+                &quot;example&quot;: 1
+              },
+              &quot;url&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;/v1/charges?payment_intent=pi_3M7uQJKgY5eOD51n1h73nyWE&quot;
+              }
+            }
+          },
+          &quot;client_secret&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;pi_3M7uQJKgY5eOD51n1h73nyWE_secret_k6vJXOyVQjHZO1qkadn4NlONY&quot;
+          },
+          &quot;confirmation_method&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;manual&quot;
+          },
+          &quot;created&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 1669353963
+          },
+          &quot;currency&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;aud&quot;
+          },
+          &quot;customer&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;description&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;Salesforce Checkout&quot;
+          },
+          &quot;invoice&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;last_payment_error&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;livemode&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;metadata&quot;: {
+            &quot;type&quot;: &quot;object&quot;
+          },
+          &quot;next_action&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;on_behalf_of&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;payment_method&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;pm_1M7uQGKgY5eOD51nYHmCKRdU&quot;
+          },
+          &quot;payment_method_options&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;card&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                  &quot;installments&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;mandate_options&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;network&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;request_three_d_secure&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;automatic&quot;
+                  }
+                }
+              }
+            }
+          },
+          &quot;payment_method_types&quot;: {
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;items&quot;: {
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;example&quot;: &quot;card&quot;
+            }
+          },
+          &quot;processing&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;receipt_email&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;review&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;setup_future_usage&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;shipping&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;source&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;statement_descriptor&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;statement_descriptor_suffix&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;status&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;succeeded&quot;
+          },
+          &quot;transfer_data&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;transfer_group&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          }
+        }
+      },
+      &quot;charge&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;id&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;ch_3M7uQJKgY5eOD51n1YV6XdwY&quot;
+          },
+          &quot;object&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;charge&quot;
+          },
+          &quot;amount&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 39990
+          },
+          &quot;amount_captured&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 39990
+          },
+          &quot;amount_refunded&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 0
+          },
+          &quot;application&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;application_fee&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;application_fee_amount&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;balance_transaction&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;txn_3M7uQJKgY5eOD51n1jOTc1Ez&quot;
+          },
+          &quot;billing_details&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;address&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                  &quot;city&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;Sydney&quot;
+                  },
+                  &quot;country&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;AU&quot;
+                  },
+                  &quot;line1&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;111 Test St&quot;
+                  },
+                  &quot;line2&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;postal_code&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 2000
+                  },
+                  &quot;state&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;NSW&quot;
+                  }
+                }
+              },
+              &quot;email&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;test@test.com&quot;
+              },
+              &quot;name&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;Testy Tester&quot;
+              },
+              &quot;phone&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;0210475370&quot;
+              }
+            }
+          },
+          &quot;calculated_statement_descriptor&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;Stripe&quot;
+          },
+          &quot;captured&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;created&quot;: {
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;example&quot;: 1669353964
+          },
+          &quot;currency&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;aud&quot;
+          },
+          &quot;customer&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;description&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;Salesforce Checkout&quot;
+          },
+          &quot;destination&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;dispute&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;disputed&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;failure_balance_transaction&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;failure_code&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;failure_message&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;fraud_details&quot;: {
+            &quot;type&quot;: &quot;object&quot;
+          },
+          &quot;invoice&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;livemode&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;metadata&quot;: {
+            &quot;type&quot;: &quot;object&quot;
+          },
+          &quot;on_behalf_of&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;order&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;outcome&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;network_status&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;approved_by_network&quot;
+              },
+              &quot;reason&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;format&quot;: &quot;nullable&quot;
+              },
+              &quot;risk_level&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;normal&quot;
+              },
+              &quot;risk_score&quot;: {
+                &quot;type&quot;: &quot;integer&quot;,
+                &quot;format&quot;: &quot;int32&quot;,
+                &quot;example&quot;: 46
+              },
+              &quot;seller_message&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;Payment complete.&quot;
+              },
+              &quot;type&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;authorized&quot;
+              }
+            }
+          },
+          &quot;paid&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;
+          },
+          &quot;payment_intent&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;pi_3M7uQJKgY5eOD51n1h73nyWE&quot;
+          },
+          &quot;payment_method&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;pm_1M7uQGKgY5eOD51nYHmCKRdU&quot;
+          },
+          &quot;payment_method_details&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;card&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                  &quot;brand&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;visa&quot;
+                  },
+                  &quot;checks&quot;: {
+                    &quot;type&quot;: &quot;object&quot;,
+                    &quot;properties&quot;: {
+                      &quot;address_line1_check&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;example&quot;: &quot;pass&quot;
+                      },
+                      &quot;address_postal_code_check&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;example&quot;: &quot;pass&quot;
+                      },
+                      &quot;cvc_check&quot;: {
+                        &quot;type&quot;: &quot;string&quot;,
+                        &quot;example&quot;: &quot;pass&quot;
+                      }
+                    }
+                  },
+                  &quot;country&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;US&quot;
+                  },
+                  &quot;exp_month&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;,
+                    &quot;format&quot;: &quot;int32&quot;,
+                    &quot;example&quot;: 12
+                  },
+                  &quot;exp_year&quot;: {
+                    &quot;type&quot;: &quot;integer&quot;,
+                    &quot;format&quot;: &quot;int32&quot;,
+                    &quot;example&quot;: 2024
+                  },
+                  &quot;fingerprint&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;aJk3zxvb9nZGDcRk&quot;
+                  },
+                  &quot;funding&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;credit&quot;
+                  },
+                  &quot;installments&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;last4&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: 4242
+                  },
+                  &quot;mandate&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;network&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;example&quot;: &quot;visa&quot;
+                  },
+                  &quot;three_d_secure&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  },
+                  &quot;wallet&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;nullable&quot;
+                  }
+                }
+              },
+              &quot;type&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;card&quot;
+              }
+            }
+          },
+          &quot;receipt_email&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;receipt_number&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;receipt_url&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;https://pay.stripe.com/receipts/payment/CAcaFwoVYWNj&quot;
+          },
+          &quot;refunded&quot;: {
+            &quot;type&quot;: &quot;boolean&quot;,
+            &quot;example&quot;: false
+          },
+          &quot;refunds&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;object&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;list&quot;
+              },
+              &quot;data&quot;: {
+                &quot;type&quot;: &quot;array&quot;,
+                &quot;items&quot;: {
+                  &quot;type&quot;: &quot;string&quot;,
+                  &quot;example&quot;: null
+                }
+              },
+              &quot;has_more&quot;: {
+                &quot;type&quot;: &quot;boolean&quot;
+              },
+              &quot;total_count&quot;: {
+                &quot;type&quot;: &quot;integer&quot;,
+                &quot;format&quot;: &quot;int32&quot;,
+                &quot;example&quot;: 0
+              },
+              &quot;url&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;/v1/charges/ch_3M7uQJKgY5eOD51n1YV6XdwY/refunds&quot;
+              }
+            }
+          },
+          &quot;review&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;shipping&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;source&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;source_transfer&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;statement_descriptor&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;statement_descriptor_suffix&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;status&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;example&quot;: &quot;succeeded&quot;
+          },
+          &quot;transfer_data&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          },
+          &quot;transfer_group&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;format&quot;: &quot;nullable&quot;
+          }
+        }
+      },
+      &quot;capturePaymentIntentUnexpectedStateResponse&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;error&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;code&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;resource_missing&quot;
+              },
+              &quot;doc_url&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;https://stripe.com/docs/error-codes/payment-intent-unexpected-state&quot;
+              },
+              &quot;message&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;Country NZ is unknown.&quot;
+              },
+              &quot;payment_intent&quot;: {
+                &quot;$ref&quot;: &quot;#/components/schemas/CapturePaymentIntentSuccessResponse&quot;
+              },
+              &quot;request_log_url&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;https://dashboard.stripe.com/test/logs/req_9MHeHumxDrsIIg?t=1666091201&quot;
+              },
+              &quot;type&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;invalid_request_error&quot;
+              }
+            }
+          }
+        }
+      },
+      &quot;CapturePaymentIntentFailureResponse&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;properties&quot;: {
+          &quot;error&quot;: {
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;properties&quot;: {
+              &quot;code&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;resource_missing&quot;
+              },
+              &quot;doc_url&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;https://stripe.com/docs/error-codes/resource-missing&quot;
+              },
+              &quot;message&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;No such payment_intent: &apos;test123&apos;&quot;
+              },
+              &quot;param&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;intent&quot;
+              },
+              &quot;request_log_url&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;https://dashboard.stripe.com/test/logs/req_gHA1r34ogj7cAx?t=1669462753&quot;
+              },
+              &quot;type&quot;: {
+                &quot;type&quot;: &quot;string&quot;,
+                &quot;example&quot;: &quot;invalid_request_error&quot;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</schema>
+    <schemaType>OpenApi3</schemaType>
+    <serviceBinding>{&quot;compatibleMediaTypes&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>3</systemVersion>
+</ExternalServiceRegistration>
