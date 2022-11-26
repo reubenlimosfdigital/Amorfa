@@ -1,0 +1,801 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Stripe Payment Intent Swagger",
+    "description": "The Swagger written for OSF Digital for External Services",
+    "version": "1.0."
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://api.stripe.com/"
+    }
+  ],
+  "paths": {
+    "/v1/payment_intents/{id}/capture": {
+      "post": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "example": "pi_3M7uQJKgY5eOD51n1h73nyWE"
+            },
+            "required": true,
+            "description": "the payment intent id"
+          }
+        ],
+        "requestBody": {
+          "description": "Captures a payment intent",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapturePaymentIntentRequest"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/capturePaymentIntentUnexpectedStateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Request Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentIntentFailureResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": [
+        "sk_test_51LPJmYKgY5eOD51ngCJGesj6iMyDetl1147SLpslAJSh8Darf5LZrmXr2DYx05ZmzUQVOBJV3XnDoq9GzE1ljJuH00g2OsbpyN"
+      ]
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "CapturePaymentIntentRequest": {
+        "type": "object"
+      },
+      "CapturePaymentIntentSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "pi_3M7uQJKgY5eOD51n1h73nyWE"
+          },
+          "object": {
+            "type": "string",
+            "example": "payment_intent"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32",
+            "example": 39990
+          },
+          "amount_capturable": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0
+          },
+          "amount_details": {
+            "type": "object",
+            "properties": {
+              "tip": {
+                "type": "object"
+              }
+            }
+          },
+          "amount_received": {
+            "type": "integer",
+            "format": "int32",
+            "example": 39990
+          },
+          "application": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "application_fee_amount": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "automatic_payment_methods": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "canceled_at": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "cancellation_reason": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "capture_method": {
+            "type": "string",
+            "example": "manual"
+          },
+          "charges": {
+            "type": "object",
+            "properties": {
+              "object": {
+                "type": "string",
+                "example": "list"
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/charge"
+                }
+              },
+              "has_more": {
+                "type": "boolean",
+                "example": false
+              },
+              "total_count": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "url": {
+                "type": "string",
+                "example": "/v1/charges?payment_intent=pi_3M7uQJKgY5eOD51n1h73nyWE"
+              }
+            }
+          },
+          "client_secret": {
+            "type": "string",
+            "example": "pi_3M7uQJKgY5eOD51n1h73nyWE_secret_k6vJXOyVQjHZO1qkadn4NlONY"
+          },
+          "confirmation_method": {
+            "type": "string",
+            "example": "manual"
+          },
+          "created": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1669353963
+          },
+          "currency": {
+            "type": "string",
+            "example": "aud"
+          },
+          "customer": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "description": {
+            "type": "string",
+            "example": "Salesforce Checkout"
+          },
+          "invoice": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "last_payment_error": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "livemode": {
+            "type": "boolean"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "next_action": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "on_behalf_of": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "payment_method": {
+            "type": "string",
+            "example": "pm_1M7uQGKgY5eOD51nYHmCKRdU"
+          },
+          "payment_method_options": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "object",
+                "properties": {
+                  "installments": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "mandate_options": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "network": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "request_three_d_secure": {
+                    "type": "string",
+                    "example": "automatic"
+                  }
+                }
+              }
+            }
+          },
+          "payment_method_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "card"
+            }
+          },
+          "processing": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "receipt_email": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "review": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "setup_future_usage": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "shipping": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "source": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "statement_descriptor": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "statement_descriptor_suffix": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "status": {
+            "type": "string",
+            "example": "succeeded"
+          },
+          "transfer_data": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "transfer_group": {
+            "type": "string",
+            "format": "nullable"
+          }
+        }
+      },
+      "charge": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "ch_3M7uQJKgY5eOD51n1YV6XdwY"
+          },
+          "object": {
+            "type": "string",
+            "example": "charge"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32",
+            "example": 39990
+          },
+          "amount_captured": {
+            "type": "integer",
+            "format": "int32",
+            "example": 39990
+          },
+          "amount_refunded": {
+            "type": "integer",
+            "format": "int32",
+            "example": 0
+          },
+          "application": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "application_fee": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "application_fee_amount": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "balance_transaction": {
+            "type": "string",
+            "example": "txn_3M7uQJKgY5eOD51n1jOTc1Ez"
+          },
+          "billing_details": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "object",
+                "properties": {
+                  "city": {
+                    "type": "string",
+                    "example": "Sydney"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "AU"
+                  },
+                  "line1": {
+                    "type": "string",
+                    "example": "111 Test St"
+                  },
+                  "line2": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "postal_code": {
+                    "type": "string",
+                    "example": 2000
+                  },
+                  "state": {
+                    "type": "string",
+                    "example": "NSW"
+                  }
+                }
+              },
+              "email": {
+                "type": "string",
+                "example": "test@test.com"
+              },
+              "name": {
+                "type": "string",
+                "example": "Testy Tester"
+              },
+              "phone": {
+                "type": "string",
+                "format": "0210475370"
+              }
+            }
+          },
+          "calculated_statement_descriptor": {
+            "type": "string",
+            "example": "Stripe"
+          },
+          "captured": {
+            "type": "boolean"
+          },
+          "created": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1669353964
+          },
+          "currency": {
+            "type": "string",
+            "example": "aud"
+          },
+          "customer": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "description": {
+            "type": "string",
+            "example": "Salesforce Checkout"
+          },
+          "destination": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "dispute": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "disputed": {
+            "type": "boolean"
+          },
+          "failure_balance_transaction": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "failure_code": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "failure_message": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "fraud_details": {
+            "type": "object"
+          },
+          "invoice": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "livemode": {
+            "type": "boolean"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "on_behalf_of": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "order": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "outcome": {
+            "type": "object",
+            "properties": {
+              "network_status": {
+                "type": "string",
+                "example": "approved_by_network"
+              },
+              "reason": {
+                "type": "string",
+                "format": "nullable"
+              },
+              "risk_level": {
+                "type": "string",
+                "example": "normal"
+              },
+              "risk_score": {
+                "type": "integer",
+                "format": "int32",
+                "example": 46
+              },
+              "seller_message": {
+                "type": "string",
+                "example": "Payment complete."
+              },
+              "type": {
+                "type": "string",
+                "example": "authorized"
+              }
+            }
+          },
+          "paid": {
+            "type": "boolean"
+          },
+          "payment_intent": {
+            "type": "string",
+            "example": "pi_3M7uQJKgY5eOD51n1h73nyWE"
+          },
+          "payment_method": {
+            "type": "string",
+            "example": "pm_1M7uQGKgY5eOD51nYHmCKRdU"
+          },
+          "payment_method_details": {
+            "type": "object",
+            "properties": {
+              "card": {
+                "type": "object",
+                "properties": {
+                  "brand": {
+                    "type": "string",
+                    "example": "visa"
+                  },
+                  "checks": {
+                    "type": "object",
+                    "properties": {
+                      "address_line1_check": {
+                        "type": "string",
+                        "example": "pass"
+                      },
+                      "address_postal_code_check": {
+                        "type": "string",
+                        "example": "pass"
+                      },
+                      "cvc_check": {
+                        "type": "string",
+                        "example": "pass"
+                      }
+                    }
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "US"
+                  },
+                  "exp_month": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 12
+                  },
+                  "exp_year": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 2024
+                  },
+                  "fingerprint": {
+                    "type": "string",
+                    "example": "aJk3zxvb9nZGDcRk"
+                  },
+                  "funding": {
+                    "type": "string",
+                    "example": "credit"
+                  },
+                  "installments": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "last4": {
+                    "type": "string",
+                    "example": 4242
+                  },
+                  "mandate": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "network": {
+                    "type": "string",
+                    "example": "visa"
+                  },
+                  "three_d_secure": {
+                    "type": "string",
+                    "format": "nullable"
+                  },
+                  "wallet": {
+                    "type": "string",
+                    "format": "nullable"
+                  }
+                }
+              },
+              "type": {
+                "type": "string",
+                "example": "card"
+              }
+            }
+          },
+          "receipt_email": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "receipt_number": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "receipt_url": {
+            "type": "string",
+            "example": "https://pay.stripe.com/receipts/payment/CAcaFwoVYWNj"
+          },
+          "refunded": {
+            "type": "boolean",
+            "example": false
+          },
+          "refunds": {
+            "type": "object",
+            "properties": {
+              "object": {
+                "type": "string",
+                "example": "list"
+              },
+              "data": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": null
+                }
+              },
+              "has_more": {
+                "type": "boolean"
+              },
+              "total_count": {
+                "type": "integer",
+                "format": "int32",
+                "example": 0
+              },
+              "url": {
+                "type": "string",
+                "example": "/v1/charges/ch_3M7uQJKgY5eOD51n1YV6XdwY/refunds"
+              }
+            }
+          },
+          "review": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "shipping": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "source": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "source_transfer": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "statement_descriptor": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "statement_descriptor_suffix": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "status": {
+            "type": "string",
+            "example": "succeeded"
+          },
+          "transfer_data": {
+            "type": "string",
+            "format": "nullable"
+          },
+          "transfer_group": {
+            "type": "string",
+            "format": "nullable"
+          }
+        }
+      },
+      "capturePaymentIntentUnexpectedStateResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "resource_missing"
+              },
+              "doc_url": {
+                "type": "string",
+                "example": "https://stripe.com/docs/error-codes/payment-intent-unexpected-state"
+              },
+              "message": {
+                "type": "string",
+                "example": "Country NZ is unknown."
+              },
+              "payment_intent": {
+                "$ref": "#/components/schemas/CapturePaymentIntentSuccessResponse"
+              },
+              "request_log_url": {
+                "type": "string",
+                "example": "https://dashboard.stripe.com/test/logs/req_9MHeHumxDrsIIg?t=1666091201"
+              },
+              "type": {
+                "type": "string",
+                "example": "invalid_request_error"
+              }
+            }
+          }
+        }
+      },
+      "CapturePaymentIntentFailureResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "resource_missing"
+              },
+              "doc_url": {
+                "type": "string",
+                "example": "https://stripe.com/docs/error-codes/resource-missing"
+              },
+              "message": {
+                "type": "string",
+                "example": "No such payment_intent: 'test123'"
+              },
+              "param": {
+                "type": "string",
+                "example": "intent"
+              },
+              "request_log_url": {
+                "type": "string",
+                "example": "https://dashboard.stripe.com/test/logs/req_gHA1r34ogj7cAx?t=1669462753"
+              },
+              "type": {
+                "type": "string",
+                "example": "invalid_request_error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
