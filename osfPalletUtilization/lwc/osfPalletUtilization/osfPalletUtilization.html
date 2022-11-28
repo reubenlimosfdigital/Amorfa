@@ -1,0 +1,23 @@
+<template>
+    <lightning-spinner if:true={isLoading} alternative-text=""
+        class="slds-is-relative slds-align_absolute-center slds-m-around_large" variant="brand">
+    </lightning-spinner>
+    <template if:false={isLoading}>
+        <div>
+            Number of pallet(s) completed: {fullPalletCount}
+        </div>
+        <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar-label-id-6">
+            <span>Current Pallet utilisation:</span>
+            <span aria-hidden="true">
+                <strong>{lastPalletUtilisationPercent}% Complete</strong>
+            </span>
+        </div>
+        <div class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100"
+            aria-valuenow='{lastPalletUtilisationPercent}' aria-label="Pallet utilization" role="progressbar">
+            <span class="slds-progress-bar__value" style={widthPercentage}>
+                <span class="slds-assistive-text">Progress: {lastPalletUtilisationPercent}%</span>
+            </span>
+        </div>
+        <div class="delivery-hint">Save delivery costs by increasing utilisation</div>
+    </template>
+</template>
