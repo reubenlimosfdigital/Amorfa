@@ -5,6 +5,10 @@ Description:   Test Class for OSF_B2CStripeAdapter.
 Test Class:    N/A
 <Date>         <Authors Name>     <Brief Description of Change>
 17-Oct-2022    Reuben Lim         Implemented test class for OSF_StripeCapturePaymentIntent
+30-Nov-2022    Reuben Lim         Removed redundant test function.
+                                  Added in creation of test PaymentGatewayProvider and NamedCredential
+                                  test data. 
+                                  Update PaymentAuthorization record to refer to the CardPaymentMethod record
 ------------------------------------------------------------*/
 @isTest(SeeAllData=true)
 private class OSF_StripeCapturePaymentIntentTest {
@@ -34,11 +38,6 @@ private class OSF_StripeCapturePaymentIntentTest {
     private static void generateCapturePaymentIntent(integer statusCode) {
         List<PaymentAuthorization> paList = [SELECT id from PaymentAuthorization];
         OSF_StripeCapturePaymentIntent.capturePaymentIntent(paList);
-    }
-    
-    @isTest
-    private static void testgeneration() {
-        id test = generateOrderSummaryTestRecord();
     }
     
     // generates a test Order Summary and returns the record id
@@ -107,8 +106,14 @@ private class OSF_StripeCapturePaymentIntentTest {
         //updated to include order payment summary data
         CardPaymentMethod cpm = new CardPaymentMethod(GatewayToken='pm_', status='Active', processingMode='External');
         insert cpm;
+
+        PaymentGatewayProvider pgp = [SELECT Id FROM PaymentGatewayProvider LIMIT 1];
+        NamedCredential nc = [SELECT Id FROM NamedCredential LIMIT 1];
+
+        PaymentGateway pg = new PaymentGateway(PaymentGatewayName='Test Payment Gateway', Status='Active', PaymentGatewayProviderId=pgp.id, MerchantCredentialId=nc.id);
+        insert pg;
             
-        PaymentAuthorization pa = new PaymentAuthorization(amount=100, status='Processed', currencyIsoCode='AUD', processingMode='External');
+        PaymentAuthorization pa = new PaymentAuthorization(amount=100, status='Processed', currencyIsoCode='AUD', processingMode='External', PaymentGatewayId=pg.id, paymentMethodId=cpm.id);
         insert pa;
         
         PaymentGatewayLog pglToken = new PaymentGatewayLog(interactionType='Tokenize', ReferencedEntityId=cpm.id);

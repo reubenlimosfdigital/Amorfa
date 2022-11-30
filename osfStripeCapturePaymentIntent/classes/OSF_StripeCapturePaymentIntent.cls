@@ -122,10 +122,7 @@ public class OSF_StripeCapturePaymentIntent {
         // retrieve authorization log, link it to the order payment summary
         // successful logs has the reference link to the payment authorisation
         PaymentGatewayLog pglAuth = [SELECT id, OrderPaymentSummaryId FROM PaymentGatewayLog WHERE InteractionType = 'Authorization' AND ReferencedEntityId =: pa.id LIMIT 1];
-        system.debug('debug');
-        
-        system.debug(pglAuth);
-        
+
         if (pglAuth != null) {
             pglAuth.OrderPaymentSummaryId = pa.OrderPaymentSummaryId;
             pglListToUpdate.add(pglAuth);
