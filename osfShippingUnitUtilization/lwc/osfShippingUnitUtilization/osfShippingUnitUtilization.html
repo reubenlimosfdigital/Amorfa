@@ -1,0 +1,26 @@
+<template>
+    <lightning-spinner if:true={isLoading} alternative-text=""
+        class="slds-is-relative slds-align_absolute-center slds-m-around_large" variant="brand">
+    </lightning-spinner>
+    <template if:false={isLoading}>
+        <div>
+            <b>{componentHeader}</b>
+        </div>
+        <div>
+            Number of {shippingUnitLabel}(s) completed: {fullShippingUnitCount}
+        </div>
+        <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small" id="progress-bar-label-id-6">
+            <span>Current {shippingUnitLabel} utilisation:</span>
+            <span aria-hidden="true">
+                <strong>{lastShippingUnitUtilisationPercent}% Complete</strong>
+            </span>
+        </div>
+        <div class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100"
+            aria-valuenow='{lastShippingUnitUtilisationPercent}' aria-label="Shipping Unit utilization" role="progressbar">
+            <span class="slds-progress-bar__value" style={widthPercentage}>
+                <span class="slds-assistive-text">Progress: {lastShippingUnitUtilisationPercent}%</span>
+            </span>
+        </div>
+        <div class="delivery-hint">{componentSubtext}</div>
+    </template>
+</template>
