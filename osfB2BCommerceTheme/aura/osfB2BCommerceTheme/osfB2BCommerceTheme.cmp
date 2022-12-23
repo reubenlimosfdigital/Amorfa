@@ -1,0 +1,125 @@
+<aura:component
+    implements="forceCommunity:themeLayout"
+    access="global"
+    description="OSF B2B Theme"
+>
+    <!--<ltng:require
+		styles="{!$Resource.xxx  + '/xxx.css'}"
+		scripts="{!$Resource.xxx + '/xxx.js'}"
+		afterScriptsLoaded="{!c.scriptsLoaded}" />-->
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.scriptsLoaded}" /> -->
+
+    <aura:handler
+        name="init"
+        value="{!this}"
+        action="{!c.scriptsLoaded}"
+    />
+    <aura:handler
+        event="forceCommunity:routeChange"
+        action="{!c.handleRouteChange}"
+    />
+
+    <!-- Updated to include a region for notification banners throughout the site -->
+    <aura:attribute
+        name="notificationBanner"
+        type="Aura.Component[]"
+        required="false"
+    />
+
+    <!-- Updated to include a region for pre headers -->
+    <aura:attribute
+        name="preHeader"
+        type="Aura.Component[]"
+        required="false"
+    />
+
+    <aura:attribute
+        name="themeHeader"
+        type="Aura.Component[]"
+        required="false"
+    />
+    <aura:attribute
+        name="themeHero"
+        type="Aura.Component[]"
+        required="false"
+    />
+
+    <aura:attribute
+        name="search"
+        type="Aura.Component[]"
+        required="false"
+    />
+    <aura:attribute
+        name="profileMenu"
+        type="Aura.Component[]"
+        required="false"
+    />
+    <aura:attribute
+        name="navBar"
+        type="Aura.Component[]"
+        required="false"
+    />
+    <!--<aura:attribute name="profileMenu" type="Aura.Component[]" required="false" />-->
+    <aura:attribute
+        name="customProfileMenu"
+        type="Aura.Component[]"
+        required="false"
+    />
+
+    <aura:attribute
+        name="miniCart"
+        type="Aura.Component[]"
+        required="false"
+    />
+
+    <aura:attribute
+        name="showHero"
+        type="Boolean"
+        required="false"
+        access="global"
+    />
+
+    <aura:attribute
+        name="showHeader"
+        type="Boolean"
+        required="false"
+        access="global"
+    />
+
+    <aura:attribute
+        name="showFooter"
+        type="Boolean"
+        required="false"
+        access="global"
+    />
+
+    <aura:attribute
+        name="footer"
+        type="Aura.Component[]"
+        required="false"
+    />
+
+    
+
+    <div>
+      <!--load ootb header to get style and script, but hide and use custom:-->
+      <aura:if isTrue="{!v.showHeader}">
+        <div aura:id="notificationBanner">{!v.notificationBanner}</div>
+        <div aura:id="preHeader">{!v.preHeader}</div>
+        <div aura:id="themeHeader">{!v.themeHeader}</div>
+      </aura:if>
+      <!-- <div class="minicart cartButton">{!v.miniCart}</div> -->
+      <aura:if isTrue="{!v.showHero}">
+          <div class="hero">{!v.themeHero}</div>
+      </aura:if>
+      <div
+          class="body"
+          aura:id="body"
+      >
+          {!v.body}
+      </div>
+      <aura:if isTrue="{!v.showFooter}">
+        <footer aura:id="footer" class="footer-container">{!v.footer}</footer>
+      </aura:if>
+  </div>
+</aura:component>

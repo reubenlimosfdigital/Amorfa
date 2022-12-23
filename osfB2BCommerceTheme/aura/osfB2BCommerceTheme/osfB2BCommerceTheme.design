@@ -1,0 +1,14 @@
+<design:component label="OSF B2B Theme">
+    <design:attribute
+        name="showHero"
+        label="Show Hero"
+    />
+    <design:attribute
+        name="showHeader"
+        label="Show Header"
+    />
+    <design:attribute
+        name="showFooter"
+        label="Show Footer"
+    />
+</design:component>
