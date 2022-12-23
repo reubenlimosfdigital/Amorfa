@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>OSF Banner</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="bannerId" label="Banner Id" type="string" default="SetBannerIdHere"
+                required="true"
+                description="A unique identifier that ties banners to each other. Enables the right persistance across multiple templates."></property>
+            <property name="bannerText" label="Banner Text" type="string"
+                default="Add banner text here." required="true" />
+            <property name="bannerTextColor" label="Text Colour" type="color" default="#000000"></property>
+            <property name="bannerBackgroundColor" label="Background Colour" type="color"
+                default="#d2d2d2"></property>
+            <property name="allowUserToClose" label="Allow User To Close" type="boolean"
+                default="true"></property>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
