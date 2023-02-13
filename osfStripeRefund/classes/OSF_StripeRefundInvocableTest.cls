@@ -21,10 +21,10 @@ private class OSF_StripeRefundInvocableTest {
 
         //retrieve the data
         OrderPaymentSummary ops = [SELECT id FROM OrderPaymentSummary WHERE OrderSummaryId =: orderSummaryId];
-        Payment payment = [SELECT id, status FROM Payment WHERE OrderPaymentSummaryId =: ops.id];
+        Refund refund = [SELECT id, status FROM Refund WHERE OrderPaymentSummaryId =: ops.id];
 
         //check that the processing worked as expected
-        Assert.areEqual('Processed', payment.status);
+        Assert.areEqual('Processed', refund.status);
         
     }
     
@@ -40,10 +40,10 @@ private class OSF_StripeRefundInvocableTest {
 
         //retrieve the data
         OrderPaymentSummary ops = [SELECT id FROM OrderPaymentSummary WHERE OrderSummaryId =: orderSummaryId];
-        Payment payment = [SELECT id, status FROM Payment WHERE OrderPaymentSummaryId =: ops.id];
+        Refund refund = [SELECT id, status FROM Refund WHERE OrderPaymentSummaryId =: ops.id];
 
         //check that the processing worked as expected
-        Assert.areEqual('Failed', payment.status);
+        Assert.areEqual('Failed', refund.status);
     }
     
     private static void runRefund(integer statusCode) {
