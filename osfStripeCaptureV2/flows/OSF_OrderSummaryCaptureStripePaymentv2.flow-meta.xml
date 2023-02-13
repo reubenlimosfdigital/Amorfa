@@ -47,7 +47,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Payment_Authorization_Record.GatewayAuthCode</leftValueReference>
+                <leftValueReference>Get_Payment_Authorization_Record.GatewayRefNumber</leftValueReference>
                 <operator>NotEqualTo</operator>
             </conditions>
             <connector>
