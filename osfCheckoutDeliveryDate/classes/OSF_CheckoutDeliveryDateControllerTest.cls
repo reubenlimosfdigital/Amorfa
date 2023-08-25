@@ -3,8 +3,7 @@ public class OSF_CheckoutDeliveryDateControllerTest {
     @testSetup
     static void setup() {
         Account acct = new Account(
-            name = 'Test OSF Commerce Account',
-            Distribution_Channel_Description__c = 'Domestic'
+            name = 'Test OSF Commerce Account'
         );
         insert acct;
 
@@ -24,20 +23,14 @@ public class OSF_CheckoutDeliveryDateControllerTest {
             new OrderDeliveryMethod(
                 Name = 'ODM valid Not FIS',
                 isActive = true,
-                Carrier = 'Hare Carriers',
-                OSF_Store__c = cart.webstoreId,
-                OSF_Price__c = 50,
-                OSF_Distribution_Channel_Description__c = 'Domestic'
+                Carrier = 'Hare Carriers'
             )
         );
         odmList.add(
             new OrderDeliveryMethod(
                 Name = 'ODM not valid',
                 isActive = false,
-                Carrier = 'Hare Carriers',
-                OSF_Store__c = cart.webstoreId,
-                OSF_Price__c = 50,
-                OSF_Distribution_Channel_Description__c = 'Domestic'
+                Carrier = 'Hare Carriers'
             )
         );
         insert odmList;
