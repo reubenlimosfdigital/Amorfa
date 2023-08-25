@@ -1,0 +1,20 @@
+<template>
+    <div class="options-container">
+        <c-osf-datepicker
+            lwc:ref="osfDatepicker"
+            label={datePickerLabel}
+            timepicker-label={timePickerLabel}
+            ondateselect={handleDateSelect}
+            ontimeselect={handleTimeSelect}
+            disabled-dates={disabledDates}
+            selected-date={requestedDate}
+            exclude-weekends={excludeWeekends}
+            show-timepicker-field={showTimePicker}
+            selected-time={requestedTime}
+            is-mandaroty={isMandaroty}
+            show-datepicker-error={showDatepickerError}
+            show-timepicker-error={showTimepickerError}
+            show-datepicker-loader={showDatepickerLoader}></c-osf-datepicker>
+        <div class="slds-m-bottom_small"></div>
+    </div>
+</template>

@@ -1,0 +1,241 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <fieldset class="slds-form-element slds-form-element_compound">
+        <!-- Start of Datepicker -->
+        <div class="slds-form-element__row">
+            <div class="slds-size_1-of-2">
+                <!-- Add Error Here slds-has-error -->
+                <div class={datepickerClass}>
+                    <label
+                        class="slds-form-element__label"
+                        for="form-element-osf-date-picker">
+                        <template if:true={isMandaroty}>
+                            <abbr
+                                class="slds-required"
+                                title="required">
+                                *
+                            </abbr>
+                        </template>
+                        {label}
+                    </label>
+                    <div class="slds-form-element__control">
+                        <input
+                            type="text"
+                            id="form-element-osf-date-picker"
+                            required=""
+                            aria-describedby="form-error-osf-date-picker"
+                            class="input-date slds-input"
+                            aria-invalid="true"
+                            value={formattedSelectedDate}
+                            onclick={showDatepicker} />
+                        <template if:true={showDatepickerLoader}>
+                            <div
+                                role="status"
+                                class="slds-spinner slds-spinner_x-small">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </template>
+                        <lightning-icon
+                            class="input-icon"
+                            icon-name="utility:date_input"
+                            alternative-text="Date"
+                            title="Date"
+                            size="x-small"></lightning-icon>
+
+                        <!-- Date Picker Panel -->
+                        <template if:true={isDatepickerVisibile}>
+                            <div
+                                class="dates"
+                                onclick={ignore}>
+                                <div class="header">
+                                    <div class="buttonContainer">
+                                        <template if:true={isPrevButtonDisabled}>
+                                            <lightning-button-icon
+                                                class="button"
+                                                aria-label="prev"
+                                                icon-name="utility:left"
+                                                alternative-text="previous"
+                                                title="Previous"
+                                                onclick={previousMonth}
+                                                variant="bare"
+                                                disabled></lightning-button-icon>
+                                        </template>
+                                        <template if:false={isPrevButtonDisabled}>
+                                            <lightning-button-icon
+                                                class="button"
+                                                aria-label="prev"
+                                                icon-name="utility:left"
+                                                alternative-text="previous"
+                                                title="Previous"
+                                                onclick={previousMonth}
+                                                variant="bare"></lightning-button-icon>
+                                        </template>
+
+                                        <span class="month">{month}</span>
+                                        <lightning-button-icon
+                                            class="button"
+                                            aria-label="next"
+                                            icon-name="utility:right"
+                                            alternative-text="next"
+                                            title="Next"
+                                            onclick={nextMonth}
+                                            variant="bare"></lightning-button-icon>
+                                    </div>
+                                    <select
+                                        class="year-options"
+                                        name="years"
+                                        id="years"
+                                        onchange={handleYearSelect}
+                                        value={year}>
+                                        <template
+                                            for:each={yearList}
+                                            for:item="year">
+                                            <template if:true={year.selected}>
+                                                <option
+                                                    key={year.value}
+                                                    value={year.value}
+                                                    selected>
+                                                    {year.value}
+                                                </option>
+                                            </template>
+                                            <template if:false={year.selected}>
+                                                <option
+                                                    key={year.value}
+                                                    value={year.value}>
+                                                    {year.value}
+                                                </option>
+                                            </template>
+                                        </template>
+                                    </select>
+                                </div>
+                                <ul class="days-of-week">
+                                    <li>Sun</li>
+                                    <li>Mon</li>
+                                    <li>Tue</li>
+                                    <li>Wed</li>
+                                    <li>Thu</li>
+                                    <li>Fri</li>
+                                    <li>Sat</li>
+                                </ul>
+                                <ul class="dates-list">
+                                    <template
+                                        for:each={dates}
+                                        for:item="date">
+                                        <li key={date.formatted}>
+                                            <div
+                                                class={date.className}
+                                                data-date={date.formatted}
+                                                data-date-obj={date.dateObj}
+                                                onclick={setSelected}>
+                                                {date.text}
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                                <div class="footer">
+                                    <button
+                                        class="link"
+                                        type="button"
+                                        onclick={goToday}>
+                                        Today
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <template if:true={showDatepickerError}>
+                        <div
+                            class="slds-form-element__help"
+                            id="form-error-osf-date-picker">
+                            Complete this field.
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start of Timepicker -->
+        <template if:true={showTimepickerField}>
+            <div class="slds-form-element__row osf-timepicker-form">
+                <div class="slds-size_1-of-2">
+                    <!-- Add Error Here slds-has-error -->
+                    <div class={timepickerClass}>
+                        <label
+                            class="slds-form-element__label"
+                            for="form-element-osf-time-picker">
+                            <template if:true={isMandaroty}>
+                                <abbr
+                                    class="slds-required"
+                                    title="required">
+                                    *
+                                </abbr>
+                            </template>
+                            {timepickerLabel}
+                        </label>
+                        <div class="slds-form-element__control">
+                            <input
+                                type="text"
+                                id="form-element-osf-time-picker"
+                                required=""
+                                aria-describedby="form-error-osf-time-picker"
+                                class="input-time slds-input"
+                                aria-invalid="true"
+                                value={formattedSelectedTime}
+                                onclick={showTimepicker} />
+
+                            <lightning-icon
+                                class="input-icon"
+                                icon-name="utility:clock"
+                                alternative-text="Date"
+                                title="Date"
+                                size="x-small"></lightning-icon>
+
+                            <!-- Time Picker Panel -->
+                            <template if:true={isTimepickerOpen}>
+                                <div
+                                    class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid osf-time-main-wrapper"
+                                    role="listbox"
+                                    tabindex="0"
+                                    aria-busy="false">
+                                    <ul
+                                        class="slds-listbox slds-listbox_vertical osf-time-container"
+                                        role="presentation">
+                                        <template
+                                            for:each={timeArray}
+                                            for:item="time">
+                                            <li
+                                                role="presentation"
+                                                class="slds-listbox__item"
+                                                key={time}
+                                                onclick={handleTimeSelection}>
+                                                <div
+                                                    class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small osf-time-item"
+                                                    role="option">
+                                                    <span
+                                                        class="slds-truncate"
+                                                        title={time}>
+                                                        {time}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </template>
+                        </div>
+                        <template if:true={showTimepickerError}>
+                            <div
+                                class="slds-form-element__help"
+                                id="form-error-osf-time-picker">
+                                Complete this field.
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </fieldset>
+</template>
