@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>OSF Checkout Delivery Date</masterLabel>
+    <targets>
+        <target>lightningCommunity__Default</target>
+        <target>lightningCommunity__Page</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property
+                label="Date Picker Label (Default)"
+                name="datePickerLabel"
+                type="String"
+                default="Requested Delivery Date"
+            />
+            <property
+                label="Time Picker Label (Default)"
+                name="timePickerLabel"
+                type="String"
+                default="Requested Delivery Time"
+            />
+            <property label="Exclude Weekends?" name="excludeWeekends" type="Boolean" default="true" />
+            <property label="Show Time Picker?" name="showTimePicker" type="Boolean" default="true" />
+            <property label="Is Mandatory?" name="isMandaroty" type="Boolean" default="true" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
