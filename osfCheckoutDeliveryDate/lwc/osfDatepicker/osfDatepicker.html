@@ -2,7 +2,7 @@
 <template>
     <fieldset class="slds-form-element slds-form-element_compound">
         <!-- Start of Datepicker -->
-        <div class="slds-form-element__row">
+        <div>
             <div class="slds-size_1-of-2">
                 <!-- Add Error Here slds-has-error -->
                 <div class={datepickerClass}>
@@ -17,7 +17,11 @@
                             </abbr>
                         </template>
                         {label}
+                        <span class="osf-tooltip">
+                            <lightning-helptext content={datepickerToolTipMessage}></lightning-helptext>
+                        </span>
                     </label>
+
                     <div class="slds-form-element__control">
                         <input
                             type="text"
@@ -159,7 +163,7 @@
 
         <!-- Start of Timepicker -->
         <template if:true={showTimepickerField}>
-            <div class="slds-form-element__row osf-timepicker-form">
+            <div class="osf-timepicker-form">
                 <div class="slds-size_1-of-2">
                     <!-- Add Error Here slds-has-error -->
                     <div class={timepickerClass}>
@@ -174,6 +178,9 @@
                                 </abbr>
                             </template>
                             {timepickerLabel}
+                            <span class="osf-tooltip">
+                                <lightning-helptext content={timepickerToolTipMessage}></lightning-helptext>
+                            </span>
                         </label>
                         <div class="slds-form-element__control">
                             <input

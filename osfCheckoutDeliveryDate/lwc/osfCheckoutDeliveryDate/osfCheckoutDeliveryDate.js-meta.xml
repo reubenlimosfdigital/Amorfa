@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>58.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>OSF Checkout Delivery Date</masterLabel>
     <targets>
@@ -13,17 +13,30 @@
                 label="Date Picker Label (Default)"
                 name="datePickerLabel"
                 type="String"
-                default="Requested Delivery Date"
+                default="Requested Order Date"
             />
             <property
                 label="Time Picker Label (Default)"
                 name="timePickerLabel"
                 type="String"
-                default="Requested Delivery Time"
+                default="Requested Order Time"
+            />
+            <property
+                label="Date Picker Tooltip (Default)"
+                name="datepickerToolTipMessage"
+                type="String"
+                default="Please select the date you would like your order to be processed. This field allows you to choose the specific date for your order to be actioned."
+            />
+            <property
+                label="Time Picker Tooltip (Default)"
+                name="timepickerToolTipMessage"
+                type="String"
+                default="Please select the time you would like your order to be processed. This field allows you to choose the specific time for your order to be actioned."
             />
             <property label="Exclude Weekends?" name="excludeWeekends" type="Boolean" default="true" />
-            <property label="Show Time Picker?" name="showTimePicker" type="Boolean" default="true" />
-            <property label="Is Mandatory?" name="isMandaroty" type="Boolean" default="true" />
+            <property label="Show Time Picker?" name="showTimePicker" type="Boolean" default="false" />
+            <property label="Is Mandatory?" name="isMandatory" type="Boolean" default="false" />
+            
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

@@ -1,10 +1,37 @@
-public with sharing class OSF_CheckoutDeliveryDateController {
+/**********************************************************************************************
+ * @description Controller class for the Checkout Delivery Date component
+ *********************************************************************************************/
+public class OSF_CheckoutDeliveryDateController {
+    /**********************************************************************************************
+     * @description  Updates the requested delivery date and time for a given cart delivery group
+     * @param        recordId The Id of the cart delivery group to update
+     * @param        requestedDeliveryDate The requested delivery date
+     * @param        requestedDeliveryTime The requested delivery time
+     * @param        isTimePickerDisable Boolean value to indicate if the time picker is disabled
+     ***********************************************************************************************/
     @AuraEnabled
     public static void updateCartDeliveryGroup(
         String recordId,
         String requestedDeliveryDate,
-        String requestedDeliveryTime
+        String requestedDeliveryTime,
+        Boolean isTimePickerDisable
     ) {
+        DateTime dt;
+        if (!isTimePickerDisable) {
+            dt = Date.valueOf(requestedDeliveryDate);
+        } else {
+            Time t = parseTime(requestedDeliveryTime);
+            dt = createDateTime(requestedDeliveryDate, t);
+        }
+        updateCartDelivery(recordId, dt);
+    }
+
+    /**********************************************************************************************
+     * @description Parses the requested delivery time string and returns a Time object
+     * @param requestedDeliveryTime The requested delivery time string in the format HH:MM AM/PM
+     * @return Time A Time object representing the requested delivery time
+     *********************************************************************************************/
+    private static Time parseTime(String requestedDeliveryTime) {
         String[] timeParts = requestedDeliveryTime.split(':');
         String hour = timeParts[0].trim();
         String minute = timeParts[1].split(' ')[0].trim();
@@ -21,23 +48,47 @@ public with sharing class OSF_CheckoutDeliveryDateController {
             Integer seconds = Integer.valueOf(m.group(3));
             Integer pmShift = m.group(4) == 'PM' ? 12 : 0;
 
-            Time t = Time.newInstance(hours + PmShift, minutes, seconds, 0);
-
-            DateTime dt = DateTime.newInstance(2023, 9, 1, t.hour(), t.minute(), t.second());
-            Date gmtDate = dt.dateGmt();
-            Time gmtTime = dt.timeGmt();
-            DateTime gmtTime1 = DateTime.newInstanceGmt(gmtDate, gmtTime);
-
-            // Update the CartDeliveryGroup record
-            // with the new DesiredDeliveryDate
-            CartDeliveryGroup cartDeliveryGroupRec = new CartDeliveryGroup(
-                Id = recordId,
-                DesiredDeliveryDate = gmtTime1
-            );
-            update cartDeliveryGroupRec;
+            return Time.newInstance(hours + pmShift, minutes, seconds, 0);
         }
+
+        return null;
     }
 
+    /**********************************************************************************************
+     * @description  : creates a DateTime object from a given date string and Time object
+     * @param        : String requestedDeliveryDate - the date string in the format YYYY-MM-DD
+     * @param        : Time t - the Time object
+     * @return       : DateTime - the DateTime object created from the given parameters
+     ***********************************************************************************************/
+    private static DateTime createDateTime(String requestedDeliveryDate, Time t) {
+        String[] dateParts = requestedDeliveryDate.split('-');
+        Integer year = Integer.valueOf(dateParts[0]);
+        Integer month = Integer.valueOf(dateParts[1]);
+        Integer day = Integer.valueOf(dateParts[2]);
+
+        DateTime dateTimeIns = DateTime.newInstance(year, month, day, t.hour(), t.minute(), t.second());
+
+        Date gmtDate = dateTimeIns.dateGmt();
+        Time gmtTime = dateTimeIns.timeGmt();
+
+        return DateTime.newInstanceGmt(gmtDate, gmtTime);
+    }
+
+    /**********************************************************************************************
+     * @description Updates the Desired Delivery Date of a Cart Delivery Group record
+     * @param  recordId The Id of the Cart Delivery Group record to be updated
+     * @param  dt The desired delivery date to be set for the Cart Delivery Group record
+     *********************************************************************************************/
+    private static void updateCartDelivery(String recordId, DateTime dt) {
+        CartDeliveryGroup cartDeliveryGroupRec = new CartDeliveryGroup(Id = recordId, DesiredDeliveryDate = dt);
+        update cartDeliveryGroupRec;
+    }
+
+    /**********************************************************************************************
+     * @description  : Returns the CartDeliveryGroup as a JSON string
+     * @param        : String cartId - The Id of the cart
+     * @return       : String - The CartDeliveryGroup as a JSON string
+     ***********************************************************************************************/
     @AuraEnabled
     public static String getCartDeliveryGroup(String cartId) {
         CartDeliveryGroup deliveryGroup = [

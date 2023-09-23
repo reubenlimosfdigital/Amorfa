@@ -31,6 +31,8 @@ export default class OsfDatepicker extends LightningElement {
     today = new Date();
     _label = 'Date';
     _timepickerLabel = 'Time';
+    _datepickerToolTipMessage = 'Select a date';
+    _timepickerToolTipMessage = 'Select a Time';
     _selectedDate;
     _selectedTime;
     _disabledDates = [];
@@ -42,6 +44,24 @@ export default class OsfDatepicker extends LightningElement {
     isDatepickerVisibile = false;
     timeArray;
     isTimepickerOpen = false;
+
+    @api
+    get datepickerToolTipMessage() {
+        return this._datepickerToolTipMessage;
+    }
+
+    set datepickerToolTipMessage(value) {
+        this._datepickerToolTipMessage = value;
+    }
+
+    @api
+    get timepickerToolTipMessage() {
+        return this._timepickerToolTipMessage;
+    }
+
+    set timepickerToolTipMessage(value) {
+        this._timepickerToolTipMessage = value;
+    }
 
     /**
      * Getter for the timepicker label
@@ -57,7 +77,6 @@ export default class OsfDatepicker extends LightningElement {
      * @param {string} value - the timepicker label
      */
     set timepickerLabel(value) {
-        console.log('@@@CHAN -> ', value);
         this._timepickerLabel = value;
     }
 
@@ -243,7 +262,7 @@ export default class OsfDatepicker extends LightningElement {
     previousMonth() {
         const currMonth = this.currDate.getMonth() === 0 ? 11 : this.currDate.getMonth() - 1;
         const currYear = this.currDate.getMonth() === 0 ? this.currDate.getFullYear() - 1 : this.currDate.getFullYear();
-        this.currDate = new Date(currYear, currMonth, this.currDate.getDate());
+        this.currDate = new Date(currYear, currMonth, 1);
         this.resfreshDate();
     }
 
@@ -254,7 +273,7 @@ export default class OsfDatepicker extends LightningElement {
         const currMonth = this.currDate.getMonth() === 11 ? 0 : this.currDate.getMonth() + 1;
         const currYear =
             this.currDate.getMonth() === 11 ? this.currDate.getFullYear() + 1 : this.currDate.getFullYear();
-        this.currDate = new Date(currYear, currMonth, this.currDate.getDate());
+        this.currDate = new Date(currYear, currMonth, 1);
         this.resfreshDate();
     }
 
@@ -329,7 +348,6 @@ export default class OsfDatepicker extends LightningElement {
     @api
     resfreshDate() {
         this.updateYear();
-        console.log('resfresh');
         this.setPreviousButton();
         this.dates = [];
 
@@ -461,9 +479,7 @@ export default class OsfDatepicker extends LightningElement {
      */
     handleTimeSelection(event) {
         this.isTimepickerOpen = false;
-        console.log('evt', event.target.querySelector('span'));
         this.formattedSelectedTime = event.target.querySelector('span').title;
         this.dispatchEvent(new CustomEvent('timeselect', { detail: this.formattedSelectedTime }));
-        console.log('handleTimeSelection', event.target.querySelector('span').title);
     }
 }

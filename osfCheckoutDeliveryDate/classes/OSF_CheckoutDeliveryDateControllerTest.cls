@@ -68,7 +68,8 @@ public class OSF_CheckoutDeliveryDateControllerTest {
         OSF_CheckoutDeliveryDateController.updateCartDeliveryGroup(
             recordId1,
             requestedDeliveryDate1,
-            requestedDeliveryTime1
+            requestedDeliveryTime1,
+            true
         );
         Test.stopTest();
         System.assert(
