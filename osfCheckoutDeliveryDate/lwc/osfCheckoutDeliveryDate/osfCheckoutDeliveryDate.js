@@ -6,12 +6,6 @@ import updateCartDeliveryGroup from '@salesforce/apex/OSF_CheckoutDeliveryDateCo
 const TODAY = new Date();
 
 export default class OsfCheckoutDeliveryDate extends LightningElement {
-    @api excludeWeekends = false;
-    @api datePickerLabel;
-    @api showTimePicker;
-    @api isMandaroty;
-    @api timePickerLabel;
-
     requestedDate;
     requestedTime;
     cartDetails;
@@ -22,38 +16,59 @@ export default class OsfCheckoutDeliveryDate extends LightningElement {
     showDatepickerError = false;
     showTimepickerError = false;
 
+    @api excludeWeekends = false;
+    @api datePickerLabel;
+    @api showTimePicker;
+    @api isMandatory;
+    @api timePickerLabel;
+    @api datepickerToolTipMessage;
+    @api timepickerToolTipMessage;
+
+    /**
+     * @api checkoutMode The checkout mode (1 for single page checkout, 0 for multi-page checkout)
+     */
     @api
     checkoutMode = 1;
 
+    /**
+     * Returns the validity of the requested date
+     * @api
+     * @returns {boolean} - true if valid, false if invalid
+     */
     @api
     get checkValidity() {
-        this.showDatepickerError = Boolean(this.error) || !this.requestedDate;
-        if (!this.requestedDate) this.showDatepickerError = true;
-        // if (!this.requestedTime) this.showTimepickerError = true;
-        return !this.showDatepickerError;
+        if (this.isMandatory) {
+            this.showDatepickerError = Boolean(this.error) || !this.requestedDate;
+            if (!this.requestedDate) this.showDatepickerError = true;
+            return !this.showDatepickerError;
+        }
+        return true;
     }
 
+    /**
+     * Reports the validity of the component
+     * @api
+     * @returns {boolean} - true if the component is valid, false otherwise
+     */
     @api
-    async reportValidity() {
-        console.log('reportValidity -> ', this.checkValidity);
-        if (!this.checkValidity) {
-            this.error = 'Requested Delivery Date should be future dates.';
-            throw new Error(this.error);
-        }
-
+    reportValidity() {
         return this.checkValidity();
     }
 
+    /**
+     * Place an order
+     */
     @api
-    async placeOrder() {
+    placeOrder() {
         this.reportValidity();
     }
 
     /**
      * Retrieves the cart details from the CartSummaryAdapter
      * @param {Object} CartSummaryAdapter - The CartSummaryAdapter wire adapter
-     * @param {Object} error - The error object if an error occurs
-     * @param {Object} data - The data object returned from the wire adapter
+     * @param {Object} error - The error object
+     * @param {Object} data - The data object
+     * @returns {Object} - The cart details
      */
     @wire(CartSummaryAdapter)
     CartSummaryAdapterFunc({ error, data }) {
@@ -66,16 +81,15 @@ export default class OsfCheckoutDeliveryDate extends LightningElement {
     }
 
     /**
-     * Retrieves the cart delivery group record from the server
+     * Retrieves the delivery group associated with the cart
      * @param {string} cartId - the ID of the cart
+     * @returns {Object} - the delivery group associated with the cart
      */
     async retrieveCartDeliveryGroup(cartId) {
         if (!cartId) return;
         getCartDeliveryGroup({ cartId: cartId })
             .then((result) => {
-                console.log('@@@CHAN result -> ' + result);
                 this.cartDeliveryGroupRecord = JSON.parse(result);
-                console.log(this.cartDeliveryGroupRecord.DesiredDeliveryDate);
                 this.requestedDate = this.cartDeliveryGroupRecord.DesiredDeliveryDate
                     ? new Date(this.cartDeliveryGroupRecord.DesiredDeliveryDate)
                     : '';
@@ -102,15 +116,15 @@ export default class OsfCheckoutDeliveryDate extends LightningElement {
             this.requestedDate.getMonth() + 1
         }-${this.requestedDate.getDate()}`;
 
-        const formattedTime = this.requestedTime ? this.requestedTime : '9:00 AM';
+        const formattedTime = this.requestedTime && this.showTimePicker ? this.requestedTime : '00:00 AM';
         this.showDatepickerLoader = true;
         updateCartDeliveryGroup({
             recordId: this.cartDeliveryGroupRecord.Id,
             requestedDeliveryDate: formattedDate,
             requestedDeliveryTime: formattedTime,
+            isTimePickerDisable: this.showTimePicker,
         })
             .then(() => {
-                console.log('updateCartDeliveryGroup: success');
                 this.showDatepickerLoader = false;
             })
             .catch((error) => {
@@ -212,9 +226,12 @@ export default class OsfCheckoutDeliveryDate extends LightningElement {
         this.updateCartDeliveryGroup();
     }
 
+    /**
+     * Updates the requested delivery time and updates the cart delivery group
+     * @param {Object} event - the event object
+     */
     handleTimeSelect(event) {
         this.requestedTime = event.detail;
         this.updateCartDeliveryGroup();
-        console.log('@@@CHAN time -> ', event.detail);
     }
 }
