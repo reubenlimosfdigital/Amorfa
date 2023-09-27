@@ -1,0 +1,47 @@
+/*
+* OSF_B2BGlobalStyle.css
+*
+* This file contains the global styles for the B2B site.
+* It includes styles for the header, category items, and selected categories.
+*/
+
+/* Custom Header Styling */
+.header {
+    background-color: var(--dxp-g-root);
+}
+
+.header > dxp_base-text-block{
+    margin-bottom: 0;
+}
+
+/* Custom Category Filters Styling */
+.category-item {
+    font-size: 1rem;
+    font-weight: normal !important;
+}
+
+.selected-category {
+    font-size: 1rem;
+}
+
+.filters-header {
+    padding-top: 1.5rem;
+}
+
+commerce_search-facet-item:not(:first-child) {
+    padding-top: 0;
+}
+
+commerce_search-facet-item > .slds-form-element {
+    margin-bottom: var(--dxp-g-spacing-xsmall);
+}
+
+commerce_search-category-tree > h2,
+.facet-name {
+    font-weight: var(--dxp-c-strong-text-weight, 700);
+}
+
+commerce_search-category-tree > ul > li.slds-truncate,
+commerce_search-facet-item > span.slds-truncate {
+    white-space: unset !important;
+}
