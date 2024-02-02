@@ -1,0 +1,243 @@
+/*
+* This section contains the styling for the OSF B2B Global Style.
+* It includes styling for the header, header text, and header background color.
+* Use in Pages:
+*   - All Pages
+*/
+.header {
+    background-color: var(--dxp-g-root);
+}
+
+.header > dxp_base-text-block{
+    margin-bottom: 0;
+}
+
+/*
+* This section contains the styling for the OSF Commerce Global Style.
+* It includes styling for category items, search category trees, selected categories,
+* filters headers, facet items, and facet names.
+* Use in Pages:
+*   - Category Page
+*   - Search Results Page
+*/
+.category-item {
+    font-size: 1rem;
+    font-weight: normal !important;
+}
+
+commerce_search-category-tree > ul > li.slds-truncate:has(> a.selected-category) {
+    margin-left: 1.1rem;
+}
+
+.selected-category {
+    font-size: 1rem;
+    margin-left: 0 !important;
+}
+
+.filters-header {
+    padding-top: 1.5rem;
+    align-items: center;
+}
+
+.filters-header > .filters-title {
+    margin-top: 0 !important;
+}
+
+commerce_search-facet-item:not(:first-child) {
+    padding-top: 0;
+}
+
+commerce_search-facet-item > .slds-form-element {
+    margin-bottom: var(--dxp-g-spacing-xsmall);
+}
+
+commerce_search-category-tree > h2,
+.facet-name {
+    font-weight: var(--dxp-c-strong-text-weight, 700);
+}
+
+commerce_search-category-tree > ul > li.slds-truncate,
+commerce_search-facet-item > span.slds-truncate {
+    white-space: unset !important;
+}
+
+/*
+* This part contains the global styles for the OSF Commerce component.
+* It includes styles for the commerce_search-product-grid, commerce_search-product-card,
+* commerce-quantity-selector, lightning-formatted-rich-text, commerce_builder-search-results-layout,
+* commerce_builder-search-filters, and commerce-search-filters components.
+* Use in Pages:
+*   - Category Page
+*   - Search Results Page
+*/
+commerce_search-product-grid > ul > li > section > commerce_search-product-card > section > div > div > commerce-quantity-selector {
+    margin-right: 1rem !important;    
+}
+
+commerce_search-product-grid > ul > li > section > commerce_search-product-card > section > div > a > div:first-child> commerce_search-product-field > div > lightning-formatted-rich-text > span {
+    font-size: 1.25rem;
+    font-weight:bold;
+}
+
+commerce_search-product-grid > ul > li > section > commerce_search-product-card > section > div > a > div:last-child {
+    margin-top: 1rem;
+}
+
+commerce_search-product-grid > ul > li > section > commerce_search-product-card > section > div.imageArea {
+    margin-right: 1.5rem !important
+}
+
+commerce_builder-search-results-layout > div > section.filters-container > div.filters > commerce_builder-search-filters > commerce-search-filters > div > button {
+    height: 33px !important;
+}
+
+/*
+* This part contains the global styles for the OSF Commerce application.
+* It contains styles for the cart items, formatted rich text, and more.
+* Use in Pages:
+*   - Cart Page
+*/
+commerce_cart-items > div > commerce_cart-item > div > div.main_details > div.main_details_description > div > div:last-child {
+	margin-top: 1rem;
+}
+
+commerce_cart-items > div > commerce_cart-item > div > div.main_details > div.main_details_description > div > div > lightning-formatted-rich-text {
+	margin-right: unset;
+}
+
+commerce_cart-items > div > commerce_cart-item > div > div.main_details > div.main_details_description > div {
+	margin-top: .3rem;
+}
+
+div.comm-forgot-password__container,
+div.comm-check-email__container,
+div.comm-login-form__container {
+    background-color: white !important;
+}
+
+@media only screen and (max-width: 47.9375em) {
+    /* Resetting margin-left for commerce_builder-search-results */
+    commerce_builder-search-results {
+        --dxp-style-c-margin-left-s: unset !important;
+    }
+
+    /* Resetting all styles for .cardContainerList */
+    .cardContainerList {
+        all: unset !important;
+    }
+
+    /* Resetting all styles for .productImage */
+    .productImage {
+        all: unset !important;
+    }
+
+    /* Adjusting height and width for .callToActionButton */
+    .callToActionButton {
+        height: unset !important;
+        width: 100% !important;
+    }
+
+    /* Adjusting flex-direction and align-items for .quantitySelectorContainer */
+    .quantitySelectorContainer {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    /* Adjusting width for button inside .callToActionButton */
+    .callToActionButton > button {
+        width: 100% !important;
+    }
+
+    /* Styling for .cardContainerList > .fieldsArea */
+    .cardContainerList > .fieldsArea {
+        margin-bottom: 1rem;
+        margin-top: 0.8rem;
+        text-align: center;
+    }
+
+    /* Styling for .cardContainerList */
+    .cardContainerList {
+        background-color: var(--com-c-product-card-container-color-background, inherit) !important;
+        border-color: var(--com-c-product-card-container-color-border, transparent) !important;
+        border-radius: var(--com-c-product-card-container-radius-border, 0) !important;
+        height: var(--com-c-product-card-container-height, auto) !important;
+        padding: var(--com-c-product-card-container-padding, 0) !important;
+    }
+
+    /* Additional styling for .cardContainerList */
+    .cardContainerList {
+        display: grid !important;
+        border-width: var(--sds-c-card-sizing-border) !important;
+        padding: 0 0.75rem !important;
+        border-style: solid !important;
+        overflow: hidden !important;
+        grid-template-rows: var(
+            --com-c-product-card-container-grid-template-rows,
+            min-content min-content min-content auto min-content min-content
+        ) !important;
+        grid-template-areas: var(
+            --com-c-product-card-container-grid-template-areas,
+            'imageArea' 'fieldsArea' 'subscriptionArea' 'priceArea' 'quantityRuleArea' 'callToActionArea'
+        ) !important;
+        flex-grow: 1 !important;
+    }
+
+    /* Resetting all styles for commerce_search-product-field */
+    commerce_search-product-grid > ul > li > section > commerce_search-product-card > section > div > a > div:first-child > commerce_search-product-field > div.slds-truncate {
+        all: unset !important;
+    }
+
+    /* Styling for .callToActionArea */
+    .callToActionArea {
+        margin-bottom: 1rem;
+    }
+
+    commerce_cart-header > div > h1 > span > section > section > dxp_base-text-block > h1 {
+        font-size: 1.3rem !important;
+    }
+
+    commerce_cart-items > div > commerce_cart-item {
+        display: flow !important;
+    }
+
+    commerce_cart-items > div > commerce_cart-item > figure.product-image{
+        height: unset !important;
+        width: unset !important;
+        margin-bottom: 1rem;
+    }
+
+    commerce_cart-items > div > commerce_cart-item > div > div.main_details {
+        text-align: center;
+    }
+
+    commerce_cart-items > div > commerce_cart-item > div > div.main_details > div.main_details_currency {
+        display: flow !important;
+    }
+
+    commerce_cart-items > div > commerce_cart-item > div > div.lwc-1noralhrh9q.main_actions > div.main_actions_selector {
+        flex-direction: row !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    commerce_cart-items > div > commerce_cart-item > div > div.main_details > div.main_details_description > a > div > h2 {
+        font-size: 1.3rem !important;
+    }
+
+    commerce_builder-b2b-cart-contents,
+    commerce_builder-cart-promotions,
+    commerce_builder-cart-summary,
+    commerce_builder-checkout-button {
+        --dxp-style-c-padding-left-s: .5rem !important;
+    	--dxp-style-c-padding-right-s: .5rem !important;
+    }
+
+    commerce_builder-cart-promotions > div > commerce_builder-cart-apply-coupon > div > commerce_cart-apply-coupon > div > div > dxp_base-button > a {
+        width: 100%;
+    }
+
+    commerce_builder-sticky-container > div > div > dxp_base-text-block > p {
+        padding-left: unset !important;
+        padding-right: unset !important;
+    }
+}
