@@ -8,5 +8,8 @@ To add it to the site, upload the static resource then do the following:
 2. Go to Settings > Advanced > Click on Edit Head Markup
 3. Add the following CSS
 
+
+
+
 <!-- Commerce Global Style -->
 <link rel="stylesheet" href="{ basePath }/sfsites/c/resource/osfCommerceAssets/osfCommerceAssets/styles/OSF_CommerceGlobalStyle.min.css?{ versionKey }" />
