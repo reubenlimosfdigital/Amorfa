@@ -10,6 +10,7 @@ To add it to the site, upload the static resource then do the following:
 
 
 
-
+```
 <!-- Commerce Global Style -->
 <link rel="stylesheet" href="{ basePath }/sfsites/c/resource/osfCommerceAssets/osfCommerceAssets/styles/OSF_CommerceGlobalStyle.min.css?{ versionKey }" />
+```
