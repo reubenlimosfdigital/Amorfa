@@ -26,6 +26,11 @@
 
 .filters-header {
     padding-top: 1.5rem;
+    align-items: center;
+}
+
+.filters-header > .filters-title {
+    margin-top: 0 !important;
 }
 
 commerce_search-facet-item:not(:first-child) {
